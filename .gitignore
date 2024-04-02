@@ -1,7 +1,5 @@
 # Ignore editor-specific files
 
-.*.swp
-.*.swo
 
 # Ignore OS-Specific Files
 .DS_Store

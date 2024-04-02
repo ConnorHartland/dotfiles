@@ -28,17 +28,15 @@ alias gs='git status'
 alias ga='git add'
 alias gc='git commit'
 
+alias sadd='eval ssh-agent && ssh-add ~/.ssh/desktop-deb'
+
 # Custom function to make directory and change into it
 mkcd() {
 	mkdir -p "$@" && cd "$_"
 }
 
 # Define a custom prompt
-if [ "$SSH_CONNECTION" ]; then
-	PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
-else
-	PS1='\[\033[01;34m\]\w\[\033[00m\]\$ '
-fi
+PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[01;33m\]$(parse_git_branch)\[\033[00m\]\$ '
 
 # Echo current time on login
 echo "Current time: $(date)"

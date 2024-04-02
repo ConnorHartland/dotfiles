@@ -22,6 +22,7 @@ alias gs='git status'
 alias ga='git add'
 alias gc='git commit'
 
+
 # Custom function to make directory and change into it
 mkcd() {
   mkdir -p "$@" && cd "$_"
@@ -36,3 +37,5 @@ fi
 
 # Echo current time on login
 echo "Current time: $(date)"
+
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"

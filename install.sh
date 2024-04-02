@@ -11,11 +11,9 @@ sudo apt-get install -y neovim tmux
 ln -sf ~/.dotfiles/.bashrc ~/.bashrc
 ln -sf ~/.dotfiles/.vimrc ~/.vimrc
 ln -sf ~/.dotfiles/.tmux.conf ~/.tmux.conf
+ln -sf ~/.dotfiles/.config/* ~/.config/*
 
-# Install Neovim plugins
-mkdir -p ~/.config/nvim/autoload
-curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs \
-    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+# Install Homebrew
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-# Install plugins
-nvim +PlugInstall +qall
+

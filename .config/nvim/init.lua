@@ -1,3 +1,11 @@
 -- bootstrap lazy.nvim, LazyVim and your plugins
-echo "HELLO"
 require("config.lazy")
+
+return { -- add gruvbox
+-- Configure LazyVim to load gruvbox
+{
+    "LazyVim/LazyVim",
+    opts = {
+        colorscheme = "gruvbox"
+    }
+}}

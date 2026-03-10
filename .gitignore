@@ -1,6 +1,4 @@
 .DS_Store
-Thumbs.db
+*.bak
 *.swp
 *.swo
-.env
-.env.local

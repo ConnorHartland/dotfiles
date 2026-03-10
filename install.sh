@@ -44,7 +44,7 @@ link_file() {
 
     if [ -e "$dst" ] || [ -L "$dst" ]; then
         if [ -L "$dst" ] && [ "$(readlink "$dst")" = "$src" ]; then
-            echo "  ok: $dst -> $src (already linked)"
+            echo "  ok: $dst (already linked)"
             return
         fi
         echo "  backup: $dst -> ${dst}.bak"
@@ -83,10 +83,20 @@ setup_omz() {
 
 # ---------- Set default shell ----------
 set_default_shell() {
-    if [ "$SHELL" != "$(which zsh)" ]; then
+    local zsh_path
+    if grep -q "^$(which zsh)$" /etc/shells 2>/dev/null; then
+        zsh_path="$(which zsh)"
+    elif grep -q "^/bin/zsh$" /etc/shells 2>/dev/null; then
+        zsh_path="/bin/zsh"
+    else
+        echo "Warning: No zsh found in /etc/shells. Add it manually and run: chsh -s \$(which zsh)"
+        return
+    fi
+
+    if [ "$SHELL" != "$zsh_path" ]; then
         echo ""
-        echo "Changing default shell to zsh..."
-        chsh -s "$(which zsh)"
+        echo "Changing default shell to $zsh_path..."
+        chsh -s "$zsh_path"
     fi
 }
 
@@ -121,7 +131,7 @@ main() {
     echo ""
     echo "Done! Restart your shell or run: source ~/.zshrc"
     echo ""
-    echo "Tip: Put machine-specific config (AWS creds, API keys, etc.) in ~/.zshrc.local"
+    echo "Tip: Put machine-specific config in ~/.zshrc.local"
 }
 
 main "$@"

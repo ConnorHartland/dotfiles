@@ -2,8 +2,8 @@
 export PATH="$HOME/.local/bin:$HOME/bin:$PATH"
 
 # Editor
-export EDITOR='vim'
-export VISUAL='vim'
+export EDITOR='nvim'
+export VISUAL='nvim'
 
 # History
 HISTSIZE=10000

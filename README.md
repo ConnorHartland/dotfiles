@@ -1,5 +1,4 @@
 # Dotfiles
-
 Personal dotfiles managed with symlinks.
 
 ## What's managed

@@ -5,7 +5,7 @@ DOTFILES_DIR="$HOME/.dotfiles"
 
 # ---------- Detect OS & package manager ----------
 install_packages() {
-    local packages=(zsh zellij git curl)
+    local packages=(zsh zellij git curl neovim fzf ripgrep fd)
 
     if [[ "$OSTYPE" == darwin* ]]; then
         if command -v brew &>/dev/null; then
@@ -17,10 +17,12 @@ install_packages() {
         fi
     elif [[ -f /etc/os-release ]]; then
         . /etc/os-release
+        # fd is packaged as fd-find on Debian/Ubuntu
+        local apt_packages=("${packages[@]/fd/fd-find}")
         if command -v apt-get &>/dev/null; then
             echo "Installing packages via apt..."
             sudo apt-get update
-            sudo apt-get install -y "${packages[@]}"
+            sudo apt-get install -y "${apt_packages[@]}"
         elif command -v dnf &>/dev/null; then
             echo "Installing packages via dnf..."
             sudo dnf install -y "${packages[@]}"
@@ -67,6 +69,9 @@ setup_symlinks() {
     # Zellij
     mkdir -p "$HOME/.config/zellij"
     link_file "$DOTFILES_DIR/.config/zellij/config.kdl" "$HOME/.config/zellij/config.kdl"
+
+    # Neovim
+    link_file "$DOTFILES_DIR/.config/nvim" "$HOME/.config/nvim"
 }
 
 # ---------- Oh My Zsh ----------

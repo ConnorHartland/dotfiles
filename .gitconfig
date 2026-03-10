@@ -1,0 +1,15 @@
+[user]
+	name = Connor
+	email = connorhartland@gmail.com
+[core]
+	excludesfile = ~/.gitignore_global
+	editor = vim
+[init]
+	defaultBranch = main
+[pull]
+	rebase = true
+[filter "lfs"]
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f

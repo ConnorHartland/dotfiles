@@ -1,22 +1,20 @@
+# dotfiles
 
-This repository contains my personal dotfiles for configuring my >
+Personal dotfiles managed with symlinks.
 
-## Installation
+## What's included
 
-1. Clone this repo to the home directory.
-`git clone https://github.com/ConnorHartland/dotfiles.git ~/.dotf>
+- **zsh** config with Oh My Zsh
+- **git** config and global gitignore
+- **zellij** terminal multiplexer config
+- **nvm** for Node.js version management
 
-2. Run the installation script:
-`cd ~/.dotfiles`
-`./install.sh`
+## Install
 
-The installation script will setup symlinks for the dotfiles and >
+```bash
+git clone https://github.com/ConnorHartland/dotfiles.git ~/.dotfiles
+cd ~/.dotfiles
+./install.sh
+```
 
-
-
-
-
-
-
-
-
+Machine-specific config (API keys, work email, etc.) goes in `~/.zshrc.local` which is sourced automatically and not tracked by git.

@@ -1,7 +1,7 @@
 layout {
     pane split_direction="vertical" {
         pane size="65%" command="nvim"
-        pane size="35%" name="claude"
+        pane size="35%" name="terminal"
     }
     pane size=1 borderless=true {
         plugin location="zellij:compact-bar"

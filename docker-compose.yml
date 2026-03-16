@@ -15,7 +15,6 @@ services:
       - /run/host-services/ssh-auth.sock:/run/host-services/ssh-auth.sock
     environment:
       - SSH_AUTH_SOCK=/run/host-services/ssh-auth.sock
-      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
       - TERM=xterm-256color
 
 volumes:

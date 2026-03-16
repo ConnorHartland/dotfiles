@@ -28,8 +28,6 @@ alias gc='git commit'
 alias gp='git push'
 alias gd='git diff'
 alias gl='git log --oneline -20'
-alias cc='claude'
-alias ccc='claude chat'
 
 # Functions
 mkcd() {
@@ -51,9 +49,6 @@ nvm() { lazy_load_nvm; nvm "$@"; }
 node() { lazy_load_nvm; node "$@"; }
 npm() { lazy_load_nvm; npm "$@"; }
 npx() { lazy_load_nvm; npx "$@"; }
-
-# Claude Code completions (re-enable when `claude completion zsh` is supported)
-# eval "$(claude completion zsh 2>/dev/null)"
 
 # Starship prompt
 eval "$(starship init zsh)"

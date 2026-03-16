@@ -61,12 +61,11 @@ WORKDIR /home/dev
 ENV DOTFILES_NONINTERACTIVE=1
 RUN cd /home/dev/.dotfiles && bash install.sh
 
-# ---------- NVM + Node + Claude Code ----------
+# ---------- NVM + Node ----------
 ENV NVM_DIR=/home/dev/.nvm
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash && \
     . "$NVM_DIR/nvm.sh" && \
-    nvm install --lts && \
-    npm install -g @anthropic-ai/claude-code
+    nvm install --lts
 
 # ---------- Pre-install Neovim plugins ----------
 RUN nvim --headless "+Lazy! sync" +qa || true

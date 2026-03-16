@@ -15,8 +15,8 @@ setopt SHARE_HISTORY
 
 # Oh My Zsh
 export ZSH="$HOME/.oh-my-zsh"
-ZSH_THEME="robbyrussell"
-plugins=(git docker kubectl)
+ZSH_THEME=""  # disabled — using Starship
+plugins=(git docker kubectl zsh-autosuggestions zsh-syntax-highlighting)
 source $ZSH/oh-my-zsh.sh
 
 # Aliases
@@ -28,16 +28,35 @@ alias gc='git commit'
 alias gp='git push'
 alias gd='git diff'
 alias gl='git log --oneline -20'
+alias cc='claude'
+alias ccc='claude chat'
 
 # Functions
 mkcd() {
     mkdir -p "$@" && cd "$_"
 }
 
-# NVM
+dev() {
+    zellij --layout dev --session "${1:-dev}"
+}
+
+# NVM (lazy-loaded for faster shell startup)
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+lazy_load_nvm() {
+    unset -f nvm node npm npx
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+}
+nvm() { lazy_load_nvm; nvm "$@"; }
+node() { lazy_load_nvm; node "$@"; }
+npm() { lazy_load_nvm; npm "$@"; }
+npx() { lazy_load_nvm; npx "$@"; }
+
+# Claude Code completions (re-enable when `claude completion zsh` is supported)
+# eval "$(claude completion zsh 2>/dev/null)"
+
+# Starship prompt
+eval "$(starship init zsh)"
 
 # Local overrides (not tracked by git)
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local

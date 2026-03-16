@@ -1,0 +1,9 @@
+.git
+.DS_Store
+*.bak
+*.swp
+*.swo
+.claude/
+.env
+.env.local
+.env.docker

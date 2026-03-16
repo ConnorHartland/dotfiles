@@ -3,11 +3,17 @@
 	email = connorhartland@gmail.com
 [core]
 	excludesfile = ~/.gitignore_global
-	editor = vim
+	editor = nvim
 [init]
 	defaultBranch = main
 [pull]
 	rebase = true
+[merge]
+	conflictstyle = zdiff3
+[diff]
+	algorithm = histogram
+[rerere]
+	enabled = true
 [filter "lfs"]
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process

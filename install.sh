@@ -9,8 +9,13 @@ install_packages() {
 
     if [[ "$OSTYPE" == darwin* ]]; then
         if command -v brew &>/dev/null; then
-            echo "Installing packages via Homebrew..."
-            brew install "${packages[@]}"
+            if [ -f "$DOTFILES_DIR/Brewfile" ]; then
+                echo "Installing packages from Brewfile..."
+                brew bundle --file="$DOTFILES_DIR/Brewfile"
+            else
+                echo "Installing packages via Homebrew..."
+                brew install "${packages[@]}"
+            fi
         else
             echo "Homebrew not found. Install it or install these manually: ${packages[*]}"
             exit 1
@@ -72,6 +77,14 @@ setup_symlinks() {
 
     # Neovim
     link_file "$DOTFILES_DIR/.config/nvim" "$HOME/.config/nvim"
+
+    # Starship
+    mkdir -p "$HOME/.config"
+    link_file "$DOTFILES_DIR/.config/starship.toml" "$HOME/.config/starship.toml"
+
+    # Zellij layouts
+    mkdir -p "$HOME/.config/zellij/layouts"
+    link_file "$DOTFILES_DIR/.config/zellij/layouts/dev.kdl" "$HOME/.config/zellij/layouts/dev.kdl"
 }
 
 # ---------- Oh My Zsh ----------
@@ -86,8 +99,27 @@ setup_omz() {
     fi
 }
 
+# ---------- Zsh plugins ----------
+setup_zsh_plugins() {
+    local zsh_custom="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}"
+
+    if [ ! -d "$zsh_custom/plugins/zsh-autosuggestions" ]; then
+        echo "Installing zsh-autosuggestions..."
+        git clone https://github.com/zsh-users/zsh-autosuggestions "$zsh_custom/plugins/zsh-autosuggestions"
+    fi
+
+    if [ ! -d "$zsh_custom/plugins/zsh-syntax-highlighting" ]; then
+        echo "Installing zsh-syntax-highlighting..."
+        git clone https://github.com/zsh-users/zsh-syntax-highlighting "$zsh_custom/plugins/zsh-syntax-highlighting"
+    fi
+}
+
 # ---------- Set default shell ----------
 set_default_shell() {
+    if [ "${DOTFILES_NONINTERACTIVE:-}" = "1" ]; then
+        return
+    fi
+
     local zsh_path
     if grep -q "^$(which zsh)$" /etc/shells 2>/dev/null; then
         zsh_path="$(which zsh)"
@@ -122,14 +154,19 @@ main() {
     echo "=== Dotfiles Setup ==="
     echo ""
 
-    read -p "Install system packages? (y/N) " -n 1 -r
-    echo ""
-    if [[ $REPLY =~ ^[Yy]$ ]]; then
+    if [ "${DOTFILES_NONINTERACTIVE:-}" = "1" ]; then
         install_packages
+    else
+        read -p "Install system packages? (y/N) " -n 1 -r
+        echo ""
+        if [[ $REPLY =~ ^[Yy]$ ]]; then
+            install_packages
+        fi
     fi
 
     setup_symlinks
     setup_omz
+    setup_zsh_plugins
     setup_nvm
     set_default_shell
 

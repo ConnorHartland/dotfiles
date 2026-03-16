@@ -1,0 +1,24 @@
+services:
+  devenv:
+    build: .
+    image: dotfiles-devenv
+    container_name: devenv
+    hostname: devbox
+    stdin_open: true
+    tty: true
+    volumes:
+      - ~/projects:/home/dev/projects
+      - devhome-zsh-history:/home/dev/.zsh_history_dir
+      - devhome-nvm:/home/dev/.nvm
+      - devhome-local:/home/dev/.local
+      # SSH agent forwarding (macOS Docker Desktop)
+      - /run/host-services/ssh-auth.sock:/run/host-services/ssh-auth.sock
+    environment:
+      - SSH_AUTH_SOCK=/run/host-services/ssh-auth.sock
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
+      - TERM=xterm-256color
+
+volumes:
+  devhome-zsh-history:
+  devhome-nvm:
+  devhome-local:
